@@ -69,7 +69,7 @@ class AnimatedFox extends PureComponent {
 					}
 
 					body{
-						background: white;
+						background: ${this.props.bgColor};
 						text-align: center;
 						color: white;
 						font-family: roboto;
