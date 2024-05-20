@@ -19,7 +19,7 @@
   "peerDependencies": {
     "react-native": "*",
     "react-native-sensors": "*",
-    "react-native-webview": "*",
+    "@metamask/react-native-webview": "*",
     "react": "*"
   },
   "dependencies": {
