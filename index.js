@@ -1,30 +1,32 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import { WebView } from "@metamask/react-native-webview";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { WebView } from '@metamask/react-native-webview';
 import { gyroscope } from "react-native-sensors";
 
 function round(value, decimals) {
-  return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
+	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 class AnimatedFox extends PureComponent {
-  constructor(props) {
-    super(props);
 
-    this.position = {
-      beta: 0,
-      gamma: 0,
-    };
+	constructor(props) {
+		super(props);
 
-    this.subscription = gyroscope.subscribe(
-      ({ x, y }) => {
-        this.position = {
-          beta: this.position.beta - round(x * -10, 4),
-          gamma: this.position.gamma - round(y * -10, 4),
-        };
+		this.position = {
+			beta: 0,
+			gamma: 0
+		};
 
-        requestAnimationFrame(() => {
-          const JS = `
+		this.subscription = gyroscope.subscribe(({ x, y}) => {
+
+			this.position = {
+				beta: this.position.beta - round(x*-10, 4),
+				gamma: this.position.gamma - round(y*-10,4)
+			}
+
+
+			requestAnimationFrame(() => {
+				const JS = `
 					(function () {
 						const event = new CustomEvent('nativedeviceorientation', {
 							detail: {
@@ -37,29 +39,27 @@ class AnimatedFox extends PureComponent {
 						window.dispatchEvent(event);
 					})();
 				`;
-          const { current } = this.webview;
-          current && current.injectJavaScript(JS);
-        });
-      },
-      () => {
-        //Nothing to do here, sensor not available
-      }
-    );
-  }
+				const { current } = this.webview;
+				current && current.injectJavaScript(JS);
+			});
+		},() => {
+			//Nothing to do here, sensor not available
+		});
+	}
 
-  componentWillUnmount() {
-    this.subscription.unsubscribe();
-  }
+    componentWillUnmount(){
+        this.subscription.unsubscribe();
+	}
 
-  webview = React.createRef();
 
-  render() {
-    return (
-      <WebView
-        ref={this.webview}
-        style={{ flex: 1 }}
-        source={{
-          html: `
+	webview = React.createRef();
+
+	render() {
+		return (
+			<WebView
+				ref={this.webview}
+				style={{ flex: 1 }}
+				source={{html:`
 					<!DOCTYPE html>
 					<html>
 					<head>
@@ -1550,25 +1550,25 @@ class AnimatedFox extends PureComponent {
 					</script>
 					</body>
 					</html>
-				`,
-        }}
-        javaScriptEnabled
-        bounces={false}
-        scrollEnabled={false}
-        injectedJavaScript={`document.body.style.background="${this.props.bgColor}"`}
-      />
-    );
-  }
+				`}}
+				javaScriptEnabled
+				bounces={false}
+				scrollEnabled={false}
+				injectedJavaScript={`document.body.style.background="${this.props.bgColor}"`}
+			/>
+		)
+	}
+
 }
 
 AnimatedFox.propTypes = {
-  /**
+		/**
 		/* String that represents the background color
 		*/
-  bgColor: PropTypes.string,
-};
+		bgColor: PropTypes.string
+}
 AnimatedFox.defaultProps = {
-  bgColor: "white",
-};
+	bgColor: 'white'
+}
 
 export default AnimatedFox;
