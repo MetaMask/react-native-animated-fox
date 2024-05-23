@@ -19,7 +19,7 @@
   "peerDependencies": {
     "react-native": "*",
     "react-native-sensors": "*",
-    "@metamask/react-native-webview": "*",
+    "@metamask/react-native-webview": ">=14.0.1",
     "react": "*"
   },
   "dependencies": {
