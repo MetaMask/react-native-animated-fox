@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { WebView } from 'react-native-webview';
+import { WebView } from '@metamask/react-native-webview';
 import { gyroscope } from "react-native-sensors";
 
 function round(value, decimals) {
